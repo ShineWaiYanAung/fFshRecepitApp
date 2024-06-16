@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kg6_project/Screen/FishCategory.dart';
 
 import 'Screen/homeScreen.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Money Recepit App',
-      home: HomeScreen(),
+      home: CategoryPage(),
     );
   }
 }
