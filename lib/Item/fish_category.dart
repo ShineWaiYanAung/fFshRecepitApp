@@ -5,6 +5,7 @@ class FishCategory{
     FishName(name :'ပါကူး'),
     FishName(name :'ငါးဒန်'),
     FishName(name: "ငါးမြင့်ချင်း"),
+    FishName(name: "ဇလားဗီးယား"),
   ];
 
 
