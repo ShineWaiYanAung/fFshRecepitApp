@@ -57,7 +57,6 @@ class _CategoryPageState extends State<CategoryPage> {
         child: Column(
           children: [
             //DrawerHeader
-
             Container(
               width: width,
               height: height *0.3,
@@ -162,7 +161,7 @@ class _CategoryPageState extends State<CategoryPage> {
       ],
     );
   }
-
+  ///FishCategory
   Widget buildTitle() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
