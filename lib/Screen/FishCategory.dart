@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:kg6_project/Item/fish_category.dart';
+import 'package:kg6_project/Screen/Cart_Page.dart';
 import 'package:kg6_project/Theme/app_color.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -11,11 +13,12 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+  bool isPressed = true;
+
   @override
   Widget build(BuildContext context) {
-    final  width =  MediaQuery.of(context).size.width ;
-    final  height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
@@ -52,56 +55,45 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
         ),
       ),
-      drawer: Drawer(
-        backgroundColor: Colors.white,
-        child: Column(
-          children: [
-            //DrawerHeader
-            Container(
-              width: width,
-              height: height *0.3,
-              decoration: BoxDecoration(
-                color: AppColor.secondColor,
-                borderRadius: const BorderRadius.only(
-                  bottomRight: Radius.circular(50),
-                  bottomLeft: Radius.circular(50)
-                )
-              ),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(radius: 50,child: Image.asset("assets/homeScreenImage/homeScreenIcon.png"),),
-                    const SizedBox(height: 20,),
-                    const Text("ShineWaiYanAung",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 20),),
-                  ],
-              ),
-            ),
-            //PlacesToGo
-            const SizedBox(height: 30,),
-            Card(
-              color: AppColor.secondColor,
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 50),
-                leading: Icon(Icons.history,color: Colors.white,),
-                title: Text('စာရင်းများကြည့်ရန်',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800),),),),
-            const SizedBox(height: 30,),
-            Card(
-              color: AppColor.secondColor,
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 50),
-                leading: Icon(Icons.shopping_bag,color: Colors.white,),
-                title: Text('ထည့်ပီးသားပစ္စည်း',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800),),),),
-
-          ],
-        )
-      ),
+      drawer: buildDrawer(width, height),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
             height: 30,
           ),
-          buildTitle(),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            decoration: BoxDecoration(
+              color: AppColor.secondColor,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 30,
+                  color: Colors.black12,
+                  offset: Offset(2, 2),
+                ),
+                BoxShadow(
+                  blurRadius: 30,
+                  color: Colors.black12,
+                  offset: Offset(2, 2),
+                ),
+                BoxShadow(
+                  blurRadius: 30,
+                  color: Colors.black12,
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+            child: const Text(
+              "ငါးအမျိုးအစားများ",
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 35,
+                color: Colors.white,
+              ),
+            ),
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -114,8 +106,10 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
               itemCount: FishCategory.fishCateo.length,
               itemBuilder: (context, index) {
-                final fishName = FishCategory.fishCateo[index];
-                return buildItem(fishName);
+                final fishItem = FishCategory.fishCateo[index];
+                return FishListingItems(
+                  items: fishItem,
+                );
               },
             ),
           ),
@@ -125,97 +119,116 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  /// Shopping Bag
-  Widget buildShoppingBag() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40),
-          child: FloatingActionButton(
-            backgroundColor: Colors.transparent, // No background color
-            elevation: 0, // No shadow
-            onPressed: () {},
-            child: Container(
-              width: 100, // Adjust the size as needed
-              height: 70,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                // Add background color to container if needed
-              ),
-              child: Icon(
-                Icons.shopping_bag,
-                color: AppColor.secondColor,
-                shadows: const [
-                  BoxShadow(
-                    blurRadius: 10,
-                    offset: Offset(1, 1),
-                    color: Colors.black26,
+  ///Drawer
+  Drawer buildDrawer(double width, double height) {
+    return Drawer(
+        backgroundColor: Colors.white,
+        child: Column(
+          children: [
+            //DrawerHeader
+            Container(
+              width: width,
+              height: height * 0.3,
+              decoration: BoxDecoration(
+                  color: AppColor.secondColor,
+                  borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(50),
+                      bottomLeft: Radius.circular(50))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    child: Image.asset(
+                        "assets/homeScreenImage/homeScreenIcon.png"),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Shine Wai Yan Aung",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20),
                   ),
                 ],
-                size: 100, // Adjust the size as needed
               ),
             ),
-          ),
-        ),
-      ],
-    );
-  }
-  ///FishCategory
-  Widget buildTitle() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      decoration: BoxDecoration(
-        color: AppColor.secondColor,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 5,
-            color: Colors.black12,
-            offset: Offset(1, 1),
-          ),
-        ],
-      ),
-      child: const Text(
-        "ငါးအမျိုးအစားများ",
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          fontSize: 35,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-
-  /// Fish Item
-  Widget buildItem(FishName fishName) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColor.secondColor,
-          borderRadius: BorderRadius.circular(50),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              color: AppColor.secondColor,
-              offset: Offset(2, 2),
+            //PlacesToGo
+            const SizedBox(
+              height: 30,
             ),
-            const BoxShadow(
-              blurRadius: 10,
-              color: Colors.black12,
-              offset: Offset(2, 2),
+            Card(
+              borderOnForeground: true,
+              shadowColor: AppColor.secondColor,
+              color: AppColor.secondColor,
+              child: const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 50),
+                leading: Icon(
+                  Icons.history,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'စာရင်းများကြည့်ရန်',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w800),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Card(
+              borderOnForeground: true,
+              shadowColor: AppColor.secondColor,
+              color: AppColor.secondColor,
+              child: const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 50),
+                leading: Icon(
+                  Icons.shopping_bag,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'ထည့်ပီးသားပစ္စည်း',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w800),
+                ),
+              ),
             ),
           ],
-        ),
-        child: Center(
-          child: Text(
-            fishName.name.toString(),
-            style: const TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 15,
-              color: Colors.white,
-            ),
+        ));
+  }
+
+  /// Shopping Bag
+  Widget buildShoppingBag() {
+    Offset distance = Offset(2, 1);
+    double blur = 5.0;
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        padding: EdgeInsets.only(left: 20),
+        child: IconButton(
+          onPressed: () {
+          final  route = MaterialPageRoute(builder: (context) => CartPage(),);
+            Navigator.of(context).push(route);
+          },
+          icon: Icon(
+            Icons.shopping_bag,
+            size: 100,
+            color: AppColor.secondColor,
+            shadows: [
+              BoxShadow(
+                blurRadius: blur,
+                color: Colors.white.withOpacity(0.1),
+                offset: -distance,
+              ),
+              BoxShadow(
+                blurRadius: blur,
+                color: Color(0xFFA7A9AF),
+                offset: distance,
+              ),
+            ],
           ),
         ),
       ),
