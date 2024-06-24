@@ -17,10 +17,13 @@ class CartBloc extends Bloc<CartEvent,CartState> {
       emit(CartState(updateCart));
       print(updateCart);
     }
+<<<<<<< HEAD
     if (event is CartDecrement) {
       final updateCart = List<FishName>.from(state.cartItems)..remove(event.items);
       emit(CartState(updateCart));
       print(updateCart);
     }
+=======
+>>>>>>> origin/master
   }
 }

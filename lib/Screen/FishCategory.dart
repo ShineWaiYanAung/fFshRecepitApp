@@ -183,22 +183,16 @@ class _CategoryPageState extends State<CategoryPage> {
               borderOnForeground: true,
               shadowColor: AppColor.secondColor,
               color: AppColor.secondColor,
-              child:  InkWell(
-                onTap: (){
-                  final route = MaterialPageRoute(builder: (context) => CartPage(),);
-                  Navigator.of(context).push(route);
-                },
-                child: const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 50),
-                  leading: Icon(
-                    Icons.shopping_bag,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'ထည့်ပီးသားပစ္စည်း',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w800),
-                  ),
+              child: const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 50),
+                leading: Icon(
+                  Icons.shopping_bag,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'ထည့်ပီးသားပစ္စည်း',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w800),
                 ),
               ),
             ),

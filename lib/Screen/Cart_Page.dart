@@ -29,10 +29,9 @@ class CartPage extends StatelessWidget {
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 0.2),
               const Padding(
-                padding: EdgeInsets.only(top: 50.0, left :30,bottom: 0),
+                padding: EdgeInsets.only(top: 50.0, bottom: 0),
                 child: Text(
                   "တန်ချိန်များ",
-
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
@@ -43,70 +42,50 @@ class CartPage extends StatelessWidget {
             ],
           ),
         ),
-        actions: [
-      Padding(
-      padding: const EdgeInsets.only(bottom: 25),
-      child: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.check_box,
-            size: 30, color: Colors.white),
       ),
-      ),
-        ],
-      ),
-
-      body: buildBlocBuilder(),
-    );
-  }
-
-  BlocBuilder<CartBloc, CartState> buildBlocBuilder() {
-    return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-      if (state.cartItems.isNotEmpty) {
-        return ListView.builder(
-          itemCount: state.cartItems.length,
-          itemBuilder: (context, index) {
-            final items = state.cartItems[index];
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                shadowColor: Colors.black,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.black26,
-                    child: Text('${index+1}'),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        items.name,
-                        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                      ),
-                      Text(
-                        items.data.toString(),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 20),
-                      ),
-                    ],
-                  ),
-                  trailing: IconButton(onPressed: (){
-                   final removeCartBloc = context.read<CartBloc>();
-                    removeCartBloc.add(CartDecrement(items));
-                  },
-                  icon: Icon(Icons.delete,color: Colors.red,),
+      body: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+        if (state.cartItems.isNotEmpty) {
+          return ListView.builder(
+            itemCount: state.cartItems.length,
+            itemBuilder: (context, index) {
+              final items = state.cartItems[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  shadowColor: Colors.black,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.black26,
+                      child: Text('${index+1}'),
+                    ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          items.name,
+                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                        ),
+                        Text(
+                          items.data.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    trailing: IconButton(onPressed: (){},
+                    icon: Icon(Icons.delete,color: Colors.red,),
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        );
-      } else {
-        return const Center(
-          child: Text("တန်ချိန်များမ မှတ်ကသေးပါ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w200),),
-        );
-      }
-    });
+              );
+            },
+          );
+        } else {
+          return const Center(
+            child: Text("တန်ချိန်များမ မှတ်ကသေးပါ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w200),),
+          );
+        }
+      }),
+    );
   }
 }
