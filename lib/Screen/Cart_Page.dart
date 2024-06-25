@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kg6_project/Bloc/cart_bloc.dart';
+import 'package:kg6_project/Screen/check_list.dart';
 
 import '../Theme/app_color.dart';
 
@@ -42,6 +43,18 @@ class CartPage extends StatelessWidget {
             ],
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(top: 9),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CheckList(),));
+              },
+              icon: const Icon(Icons.check_box,
+                  size: 28, color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
         if (state.cartItems.isNotEmpty) {
@@ -72,7 +85,10 @@ class CartPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    trailing: IconButton(onPressed: (){},
+                    trailing: IconButton(onPressed: (){
+                     final deleteBloc = context.read<CartBloc>();
+                          deleteBloc.add(CartDecrement(items));
+                    },
                     icon: Icon(Icons.delete,color: Colors.red,),
                     ),
                   ),
