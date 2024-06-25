@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kg6_project/Bloc/cart_bloc.dart';
-import 'package:kg6_project/Screen/FishCategory.dart';
+
 
 import 'Screen/homeScreen.dart';
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: const MaterialApp(
-        title: 'Money Recepit App',
+        title: 'Money Receipt App',
         home: HomeScreen(),
       ),
     );
