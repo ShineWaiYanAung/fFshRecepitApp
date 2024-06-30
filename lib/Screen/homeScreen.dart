@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kg6_project/CubitBloc/usernameHander_cubit.dart';
 import 'package:kg6_project/Screen/FishCategory.dart';
 import 'package:kg6_project/Theme/app_color.dart';
 import 'dart:ui';
@@ -113,7 +115,9 @@ class HomeScreen extends StatelessWidget {
         ),
       );
     } else {
+      context.read<NamingCubit>().saveUsername(userName);
       Navigator.of(context).push(
+
         MaterialPageRoute(
           builder: (context) => const CategoryPage(),
         ),

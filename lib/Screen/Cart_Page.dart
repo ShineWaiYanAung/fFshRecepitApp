@@ -66,7 +66,7 @@ class CartPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Card(
                   shadowColor: Colors.black,
-                  child: ListTile(
+                  child: ExpansionTile(
                     leading: CircleAvatar(
                       backgroundColor: Colors.black26,
                       child: Text('${index+1}'),
@@ -91,6 +91,9 @@ class CartPage extends StatelessWidget {
                     },
                     icon: Icon(Icons.delete,color: Colors.red,),
                     ),
+                    children: [
+                      Center(child: Text('တန်ဖိုး ${items.price.toString()}ကျပ်',style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),)),
+                    ],
                   ),
                 ),
               );

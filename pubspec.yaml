@@ -46,6 +46,7 @@ dev_dependencies:
   flutter:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  shared_preferences: ^2.2.3
 
 flutter_launcher_icons:
   android: "launcher_icon"

@@ -40,26 +40,39 @@ class _CheckListState extends State<CheckList> {
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             final cartItems = state.cartItems;
-            Map<String, int> mergedMap = {};
+            Map<String, FishName> mergedMap = {};
 
-            // Add the fishList to the map, updating the data if the name already exists
+            // Add the fishList to the map, updating the data if the name and price already exist
             for (var fish in cartItems) {
-              if (mergedMap.containsKey(fish.name)) {
-                mergedMap[fish.name] = mergedMap[fish.name]! + fish.data!;
+              String key = '${fish.name}-${fish.price}';
+              if (mergedMap.containsKey(key)) {
+                mergedMap[key] = FishName(
+                  name: fish.name,
+                  data: mergedMap[key]!.data! + fish.data!,
+                  price: fish.price,
+                );
               } else {
-                mergedMap[fish.name] = fish.data!;
+                mergedMap[key] = FishName(
+                  name: fish.name,
+                  data: fish.data!,
+                  price: fish.price!,
+                );
               }
             }
-            List<FishName> mergedList = mergedMap.entries
-                .map((entry) => FishName(name: entry.key, data: entry.value))
-                .toList();
+
+            List<FishName> mergedList = mergedMap.values.toList();
+
+              final String totalPrice = mergedList.fold<double>(0, (previousValue,newValue)=>
+              previousValue + (newValue.data!*newValue.price!)
+              ).toString();
+
             if (mergedList.isNotEmpty) {
-              double index = mergedList.length.toDouble();
+
               return Center(
                 child: Container(
-                  padding: EdgeInsets.only(top: 40, right: 30, left: 30),
-                  width: 300,
-                  height: index<2 ? 200 : 100 * (index - (index<=3?0.0 :0.8)),
+                  padding: EdgeInsets.only(top: 40, right: 20,left: 20),
+                  width: 360,
+                 // height: index<2 ? 250 : 150 * (index - (index<=3? 0.0 :3)),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
@@ -77,49 +90,79 @@ class _CheckListState extends State<CheckList> {
                           inset: true,
                         ),
                       ]),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            "ငါးအမည်",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800, fontSize: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "ငါးအမည်",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize: 15),
+                              ),
+                              Text(
+                                "တန်ချိန်",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize: 15),
+                              ),
+                              Text(
+                                "တန်ဖိုး",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize:15),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "တန်ချိန်",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800, fontSize: 20),
+                          Divider(
+                            height: 30,
+                            thickness: 2,
+                            color: Colors.black,
                           ),
-                        ],
-                      ),
-                      Divider(
-                        height: 30,
-                        thickness: 2,
-                        color: Colors.black,
-                      ),
-                      Column(
-                        children: mergedList.map((item) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(item.name),
-                                Text(item.data.toString()),
+                                Column(
+                                  children: List.generate(mergedList.length, (index) {
+                                    var item = mergedList[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(
+                                            width: 100,
+                                            child: Text('${index + 1}.${item.name}'), // Display index + 1 for counting number
+                                          ),
+                                          Text("${item.data.toString()}kg"),
+                                          Text("${item.price.toString()}ကျပ်"),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                                Divider(
+                                  height: 30,
+                                  thickness: 2,
+                                  color: Colors.black,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text("စုစုပေါင်းကျပ်ငွေ           ${totalPrice}ကျပ်")),
+                                Text(
+                                  _currentDate,
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                  ),
+                                ),
                               ],
                             ),
-                          );
-                        }).toList(),
+                          )
+                        ],
                       ),
-                      Text(
-                        _currentDate,
-                        style: TextStyle(
-                          color: Colors.green,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               );

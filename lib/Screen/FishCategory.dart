@@ -1,8 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:kg6_project/Item/fish_category.dart';
 import 'package:kg6_project/Screen/Cart_Page.dart';
 import 'package:kg6_project/Theme/app_color.dart';
+
+import '../CubitBloc/usernameHander_cubit.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -145,13 +148,16 @@ class _CategoryPageState extends State<CategoryPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Shine Wai Yan Aung",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  ),
+                  BlocBuilder<NamingCubit, String>(
+                      builder: (context, username) {
+                    return Text(
+                      username,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -210,7 +216,9 @@ class _CategoryPageState extends State<CategoryPage> {
         padding: EdgeInsets.only(left: 20),
         child: IconButton(
           onPressed: () {
-          final  route = MaterialPageRoute(builder: (context) => CartPage(),);
+            final route = MaterialPageRoute(
+              builder: (context) => CartPage(),
+            );
             Navigator.of(context).push(route);
           },
           icon: Icon(
