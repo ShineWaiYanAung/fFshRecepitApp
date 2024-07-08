@@ -1,7 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Bloc/cart_bloc.dart';
+import '../HiveTransaction/boxes.dart';
+import '../HiveTransaction/transaction.dart';
+import '../Item/fish_category.dart';
+
 class NamingCubit extends Cubit<String> {
+
   NamingCubit() : super('') {
     _loadUsername();
   }
@@ -19,4 +25,6 @@ class NamingCubit extends Cubit<String> {
     await prefs.setString('username', name);
     emit(name);
   }
+
+
 }

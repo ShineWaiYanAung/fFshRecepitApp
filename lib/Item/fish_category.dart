@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:kg6_project/Bloc/cart_bloc.dart';
 import '../Theme/app_color.dart';
+import 'package:hive/hive.dart';
+part 'fish_category.g.dart';
 
 class FishCategory {
   static List<FishName> fishCateo = [
@@ -13,7 +15,7 @@ class FishCategory {
     FishName(name: "ငါးမြင့်ချင်း"),
     FishName(name: "ဇလားဗီးယား"),
   ];
-  static void _handleErrorState(
+  static void handleErrorState(
       BuildContext context, String message, bool errorState) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -24,17 +26,25 @@ class FishCategory {
   }
 }
 
+@HiveType(typeId: 1)
 class FishName {
+  @HiveField(0)
   final String name;
+
+  @HiveField(1)
   final double? data;
+
+  @HiveField(2)
   final double? price;
 
   FishName({required this.name, this.data, this.price});
+
   @override
   String toString() {
-    return '$name, data: $data}';
+    return '$name, data: $data';
   }
 }
+
 
 class FishListingItems extends StatefulWidget {
   final FishName items;
@@ -98,7 +108,7 @@ class _FishListingItemsState extends State<FishListingItems> {
               widget.items.name,
               style: TextStyle(
                 fontWeight: FontWeight.w800,
-                fontSize: 15,
+                fontSize: 13,
                 color: AppColor.textColor,
               ),
             ),
@@ -181,7 +191,7 @@ class _FishListingItemsState extends State<FishListingItems> {
                         priceController.text= '';
                       });
                       Navigator.of(context).pop();
-                      FishCategory._handleErrorState(
+                      FishCategory.handleErrorState(
                           context, 'စာရင်းမှတ်လိုက်ပါပီ', true);
                     } else if (dataController.text.isEmpty||priceController.text.isEmpty) {
                       setState(() {

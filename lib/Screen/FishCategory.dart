@@ -3,6 +3,7 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:kg6_project/Item/fish_category.dart';
 import 'package:kg6_project/Screen/Cart_Page.dart';
+import 'package:kg6_project/Screen/invoce_history.dart';
 import 'package:kg6_project/Theme/app_color.dart';
 
 import '../CubitBloc/usernameHander_cubit.dart';
@@ -140,10 +141,28 @@ class _CategoryPageState extends State<CategoryPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    child: Image.asset(
-                        "assets/homeScreenImage/homeScreenIcon.png"),
+                  InkWell(
+                    onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => Scaffold(
+                      appBar: AppBar(
+                        leading: IconButton(
+                            onPressed: ()=>Navigator.of(context).pop(),
+                            icon: Icon(Icons.arrow_back_ios,
+                              color:  Theme.of(context).focusColor ,)),
+                      ),
+                      body: Center(
+                        child: Hero(
+                            tag: 'person',
+                            child: Image.asset("assets/homeScreenImage/homeScreenIcon.png")),
+                      ),
+                    ),)),
+                    child: Hero(
+                      tag :'person',
+                      child: CircleAvatar(
+                        radius: 50,
+                        child: Image.asset(
+                            "assets/homeScreenImage/homeScreenIcon.png"),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -152,7 +171,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       builder: (context, username) {
                     return Text(
                       username,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: 20),
@@ -169,16 +188,19 @@ class _CategoryPageState extends State<CategoryPage> {
               borderOnForeground: true,
               shadowColor: AppColor.secondColor,
               color: AppColor.secondColor,
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 50),
-                leading: Icon(
-                  Icons.history,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'စာရင်းများကြည့်ရန်',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w800),
+              child: InkWell(
+                onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => InvoiceHistory(),)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 50),
+                  leading: Icon(
+                    Icons.history,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'စာရင်းများကြည့်ရန်',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w800),
+                  ),
                 ),
               ),
             ),
@@ -189,16 +211,19 @@ class _CategoryPageState extends State<CategoryPage> {
               borderOnForeground: true,
               shadowColor: AppColor.secondColor,
               color: AppColor.secondColor,
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 50),
-                leading: Icon(
-                  Icons.shopping_bag,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'ထည့်ပီးသားပစ္စည်း',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w800),
+              child: InkWell(
+                onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => CartPage(),)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 50),
+                  leading: Icon(
+                    Icons.shopping_bag,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'ထည့်ပီးသားပစ္စည်း',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w800),
+                  ),
                 ),
               ),
             ),

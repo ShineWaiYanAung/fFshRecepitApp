@@ -12,47 +12,31 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Disable default leading icon
-        flexibleSpace: Container(
-          color: AppColor.secondColor,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 45.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.arrow_back_ios,
-                      size: 30, color: Colors.white),
-                ),
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.2),
-              const Padding(
-                padding: EdgeInsets.only(top: 50.0, bottom: 0),
-                child: Text(
-                  "တန်ချိန်များ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-            ],
+        backgroundColor: AppColor.secondColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_back_ios,
+              size: 30, color: Colors.white),
+        ),
+        title: Text(
+          "တန်ချိန်များ",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
           ),
         ),
+        centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(top: 9),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CheckList(),));
-              },
-              icon: const Icon(Icons.check_box,
-                  size: 28, color: Colors.white),
-            ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CheckList(),
+              ));
+            },
+            icon: const Icon(Icons.check_box, size: 28, color: Colors.white),
           ),
         ],
       ),
@@ -69,14 +53,15 @@ class CartPage extends StatelessWidget {
                   child: ExpansionTile(
                     leading: CircleAvatar(
                       backgroundColor: Colors.black26,
-                      child: Text('${index+1}'),
+                      child: Text('${index + 1}'),
                     ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
                           items.name,
-                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800, fontSize: 20),
                         ),
                         Text(
                           items.data.toString(),
@@ -85,14 +70,23 @@ class CartPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    trailing: IconButton(onPressed: (){
-                     final deleteBloc = context.read<CartBloc>();
-                          deleteBloc.add(CartDecrement(items));
-                    },
-                    icon: Icon(Icons.delete,color: Colors.red,),
+                    trailing: IconButton(
+                      onPressed: () {
+                        final deleteBloc = context.read<CartBloc>();
+                        deleteBloc.add(CartDecrement(items));
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
                     ),
                     children: [
-                      Center(child: Text('တန်ဖိုး ${items.price.toString()}ကျပ်',style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),)),
+                      Center(
+                          child: Text(
+                        'တန်ဖိုး ${items.price.toString()}ကျပ်',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 20),
+                      )),
                     ],
                   ),
                 ),
@@ -101,7 +95,10 @@ class CartPage extends StatelessWidget {
           );
         } else {
           return const Center(
-            child: Text("တန်ချိန်များမ မှတ်ကသေးပါ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w200),),
+            child: Text(
+              "တန်ချိန်များမ မှတ်ကသေးပါ",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
+            ),
           );
         }
       }),

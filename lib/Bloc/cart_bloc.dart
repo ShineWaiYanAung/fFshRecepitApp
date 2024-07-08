@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../HiveTransaction/boxes.dart';
+import '../HiveTransaction/transaction.dart';
 import '../Item/fish_category.dart';
 
 part "cart_event.dart";
@@ -25,4 +27,25 @@ class CartBloc extends Bloc<CartEvent,CartState> {
     }
 
   }
+  Future<void> addTranscation(List<FishName>items,)async{
+    // final transaction = Transaction();
+    // transaction.invoice = items;
+    // transaction.createdDate = DateTime.now();
+
+    final transaction =  Transaction()
+      ..invoice = items
+      ..createdDate= DateTime.now();
+    final box = Boxes.getTransactions();
+    box.add(transaction);
+    emit(CartState([]));
+    print("Cart state reset ${state.cartItems}");
+    print("${transaction.invoice}");
+
+
+
+  }
+  void deleteTransaction(Transaction transaction) {
+    transaction.delete();
+  }
+
 }
